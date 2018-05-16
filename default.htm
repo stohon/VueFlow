@@ -1,0 +1,149 @@
+﻿<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+    <style>
+        * { font-family:sans-serif; font-size:14px; }
+        .workWindow { width: 1200px; clear:left; } 
+        .workColumn { height: 70vh; overflow: auto; float:left; }
+        .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } .pl15 { padding-left:15px; } 
+        .p15 { padding:15px; } .w16 { width: 16px; } .w200 { width: 200px; } 
+        .fL { float:left; } .fR { float:right; }
+        .vL { width:138px; text-align:center; } .vM { width:300px; text-align:center; } .vR { width:500px; }
+        .btn { border:3px solid white; border-radius: 8px; } .btn:hover { border:3px solid highlight; } .sel {border:3px solid red;}
+    </style>
+    <script>
+        var page = {
+            load: function () {
+                this.vue = new Vue({
+                    el: '#app',
+                    data: {
+                        application: null, components: [], modIndex: "0", compIndex: "", dragName: "", dragIndex: "", dropIndex: ""
+                    },
+                    computed: {
+                        _ok() { return this.application != null; },
+                        _modules() { return this._ok ? this.application.modules : []; },
+                        _module() { return this._modules.length > 0 ? page.vue._modules[page.vue.modIndex] : {}; },
+                        _components() { return this._module.components; },
+                        _component() { return this._components[page.vue.compIndex]; }
+                    },
+                    methods: {
+                        get(name, ext) {
+                            return axios.get('Components/' + name + '/properties.' + ext + '?' + Math.random()).catch(e => alert(name + ext + e)); },
+                        drag(cName, i) {
+                            this.dragName = cName;
+                            this.dragIndex = i;
+                        },
+                        drop(i, ctrlKey) {
+                            this.dropIndex = i;
+                            this.dragIndex == null ? this.dropComponent() : this.moveComponent(ctrlKey);
+                        },
+                        newApplication() {
+                            this.get('application', 'json')
+                                .then(r => {
+                                    page.vue.application = { name: "new application", properties: r.data, modules: [] };
+                                    page.vue.newModule(); });
+                        },
+                        saveApplication() {
+                            return "data:' + text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.application));
+                        },
+                        loadApplication() {
+                            this.get('application', 'json').then(r => page.vue.application = r.data);
+                        },
+                        newModule() {
+                            this.get('module', 'json')
+                                .then(r =>  page.vue._modules.push({ name: "new module", properties: r.data, components: [] }))
+                                .then(() => {
+                                    page.vue.modIndex = page.vue._modules.length - 1;
+                                    page.vue.loadModuleSettings();
+                                });
+                        },
+                        loadComponents() {
+                            axios.get('Components/components.json').then(r => page.vue.components = r.data);
+                        },
+                        newComponent(properties) {
+                            this._components.splice(this.dropIndex, 0, { name: this.dragName, properties: properties });
+                        },
+                        dropComponent() {
+                            this.get(this.dragName, 'json')
+                                .then(r => { page.vue.newComponent(r.data); page.vue.loadComponentSettings(page.vue.dropIndex); });
+                        },
+                        moveComponent(ctrlKey) {
+                            alert(ctrlKey);
+                            ctrlKey ?
+                                this.newComponent(_.clone(this._components[this.dragIndex].properties)) :
+                                this.newComponent(this._components.splice(this.dragIndex, 1)[0].properties)
+                            this.loadComponentSettings(this.dropIndex);
+                        },
+                        loadApplicationSettings() {
+                            page.vue.get("application", 'html').then(r => page.vue.setSettingsHTML(r, page.vue.application));
+                        },
+                        loadModuleSettings() {
+                            page.vue.get("module", 'html').then(r => page.vue.setSettingsHTML(r, page.vue._module));
+                        },
+                        loadComponentSettings(i) {
+                            page.vue.compIndex = i;
+                            page.vue.get(page.vue._component.name, 'html').then(r => page.vue.setSettingsHTML(r, page.vue._component));
+                        },
+                        setSettingsHTML(r, d) {
+                            document.getElementById("component").innerHTML = r.data;
+                            new Vue({ el: '#component', data: { component: d } });
+                        }
+                    },
+                    created() { this.loadComponents(); this.newApplication(); }
+                });
+            }
+        }
+    </script>
+</head>
+<body onload="page.load()">
+    <div id="app">
+        <div class="p15">
+            <div class="fL pt2">Module:
+                <div class="fL pl15">&nbsp;</div>
+                <select id="modules" class="w200" v-model="modIndex" v-on:change="loadModuleSettings();">
+                    <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
+                </select>
+            </div>
+            <div class="fL pl15">&nbsp;</div>
+            <img class="fL btn w16" src="Images/add.svg" onclick="page.vue.newModule()" />
+            <img class="fL btn w16" src="Images/delete.svg" />
+            <img class="fL btn w16" src="Images/edit.svg" onclick="page.vue.loadModuleSettings()" />
+            <div class="fL pl15">&nbsp;</div>
+            <img class="fL btn w16" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
+            <img class="fL btn w16" src="Images/save.svg" onclick="page.vue.loadApplicationSettings()" />
+        </div>
+        <div class="workWindow p15">
+            <div class="vL workColumn">
+                <div v-for="c in components">
+                    <img class="btn" draggable="true" ondragstart="page.vue.drag(this.getAttribute('componentName'), null)"
+                                     v-if="c.charAt(0) == c.charAt(0).toLowerCase()" 
+                                     v-bind:src="'components/' + c + '/card.png'" 
+                                     v-bind:componentName="c" />
+                </div>
+            </div>
+            <div class="vM workColumn">
+                <img src="Images/link.png" ondrop="page.vue.drop(0, event.ctrlKey)" ondragover="event.preventDefault()" />
+                <div v-for="(wi, i) in _components">
+                    <div>
+                        <img v-bind:class="(compIndex == i) ? 'btn sel' : 'btn'" 
+                             v-bind:id="'workitem' + i" 
+                             v-bind:index="i" 
+                             v-bind:src="'components/' + wi.name + '/card.png'" 
+                             v-bind:componentName="wi.name" draggable="true" 
+                             ondragstart="page.vue.drag(this.getAttribute('componentName'), this.getAttribute('index'))" 
+                             onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
+                    </div>
+                    <div>
+                        <img v-bind:index="i + 1" 
+                             src="Images/link.png" 
+                             ondrop="page.vue.drop(this.getAttribute('index'), event.ctrlKey)" 
+                             ondragover="event.preventDefault()" /></div>
+                </div>
+            </div>
+            <div id="component" class="vR workColumn pl15" />
+        </div>
+    </div>
+</body>
+</html>
