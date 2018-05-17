@@ -13,7 +13,7 @@
         .fL { float:left; } .fR { float:right; }
         .vL { width:138px; text-align:center; } .vM { width:350px; text-align:center; } .vR { width:500px; }
         .btn { border:3px solid white; border-radius: 8px; } .btn:hover { border:3px solid highlight; } 
-        .sel {border:3px solid red;}
+        .sel { border:3px solid red; }
     </style>
     <script>
         var page = {
@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div class="vM workColumn">
-                <img src="Images/link.png" ondrop="page.vue.drop(0, event.ctrlKey)" ondragover="event.preventDefault()" />
+                <img src="Images/linkb.png" ondrop="page.vue.drop(0, event.ctrlKey)" ondragover="event.preventDefault()" />
                 <div v-for="(wi, i) in _components">
                     <div>
                         <img v-bind:class="(compIndex == i) ? 'btn sel' : 'btn'" 
@@ -158,7 +158,7 @@
                     </div>
                     <div>
                         <img v-bind:index="i + 1" 
-                             src="Images/link.png" 
+                             v-bind:src="(_components.length == (i + 1)) ? 'Images/linke.png' : 'Images/linkmid.png'" 
                              ondrop="page.vue.drop(this.getAttribute('index'), event.ctrlKey)" 
                              ondragover="event.preventDefault()" /></div>
                 </div>
