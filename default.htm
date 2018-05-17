@@ -6,12 +6,14 @@
     <style>
         * { font-family:sans-serif; font-size:14px; }
         .workWindow { width: 1200px; clear:left; } 
-        .workColumn { height: 70vh; overflow: auto; float:left; }
-        .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } .pl15 { padding-left:15px; } 
-        .p15 { padding:15px; } .w16 { width: 16px; } .w200 { width: 200px; } 
+        .workColumn { height: 75vh; overflow: auto; float:left; }
+        .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
+        .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
+        .p15 { padding:15px; } .w16 { width: 16px; } .w100 { width: 100px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; }
         .vL { width:138px; text-align:center; } .vM { width:300px; text-align:center; } .vR { width:500px; }
-        .btn { border:3px solid white; border-radius: 8px; } .btn:hover { border:3px solid highlight; } .sel {border:3px solid red;}
+        .btn { border:3px solid white; border-radius: 8px; } .btn:hover { border:3px solid highlight; } 
+        .sel {border:3px solid red;}
     </style>
     <script>
         var page = {
@@ -46,7 +48,10 @@
                                     page.vue.newModule(); });
                         },
                         saveApplication() {
-                            return "data:' + text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.application));
+                            var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.application));
+                            var saveElement = document.getElementById("saveApp");
+                            saveElement.href = 'data:' + data;
+                            saveElement.download = this.application.name + '.json';
                         },
                         loadApplication() {
                             this.get('application', 'json').then(r => page.vue.application = r.data);
@@ -59,6 +64,9 @@
                                     page.vue.loadModuleSettings();
                                 });
                         },
+                        deleteModule() {
+
+                        },
                         loadComponents() {
                             axios.get('Components/components.json').then(r => page.vue.components = r.data);
                         },
@@ -70,7 +78,6 @@
                                 .then(r => { page.vue.newComponent(r.data); page.vue.loadComponentSettings(page.vue.dropIndex); });
                         },
                         moveComponent(ctrlKey) {
-                            alert(ctrlKey);
                             ctrlKey ?
                                 this.newComponent(_.clone(this._components[this.dragIndex].properties)) :
                                 this.newComponent(this._components.splice(this.dragIndex, 1)[0].properties)
@@ -100,19 +107,22 @@
 <body onload="page.load()">
     <div id="app">
         <div class="p15">
-            <div class="fL pt2">Module:
-                <div class="fL pl15">&nbsp;</div>
-                <select id="modules" class="w200" v-model="modIndex" v-on:change="loadModuleSettings();">
-                    <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
-                </select>
-            </div>
-            <div class="fL pl15">&nbsp;</div>
+            <div class="fL w100 pt2">Application:</div>
+            <input class="fL w300" type='file' id='fileinput'>
+            <div class="fL">&nbsp;</div>
+            <img class="fL btn w16" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
+            <a id="saveApp"><img class="fL btn w16" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
+        </div>
+        <div class="p15">
+            <div class="fL w100 pt2">Module:</div>
+            <select id="modules" class="fL w300" v-model="modIndex" v-on:change="loadModuleSettings();">
+                <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
+            </select>
+            <div class="fL">&nbsp;</div>
             <img class="fL btn w16" src="Images/add.svg" onclick="page.vue.newModule()" />
-            <img class="fL btn w16" src="Images/delete.svg" />
+            <img class="fL btn w16" src="Images/delete.svg" onclick="page.vue.deleteModule()" />
             <img class="fL btn w16" src="Images/edit.svg" onclick="page.vue.loadModuleSettings()" />
             <div class="fL pl15">&nbsp;</div>
-            <img class="fL btn w16" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
-            <img class="fL btn w16" src="Images/save.svg" onclick="page.vue.loadApplicationSettings()" />
         </div>
         <div class="workWindow p15">
             <div class="vL workColumn">
