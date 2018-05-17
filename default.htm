@@ -54,7 +54,14 @@
                             saveElement.download = this.application.name + '.json';
                         },
                         loadApplication() {
-                            this.get('application', 'json').then(r => page.vue.application = r.data);
+                            var fileElement = document.getElementById("appFile");
+                            fr = new FileReader();
+                            fr.onload = this.loadApplicationOnload;
+                            fr.readAsText(fileElement.files[0]);
+                        },
+                        loadApplicationOnload(e) {
+                            let lines = e.target.result;
+                            this.application = JSON.parse(lines); 
                         },
                         newModule() {
                             this.get('module', 'json')
@@ -65,7 +72,9 @@
                                 });
                         },
                         deleteModule() {
-
+                            this._modules.splice(this.modIndex, 1);
+                            if (this._modules.length <= this.modIndex) { this.modIndex = this._modules.length - 1; }
+                            this.loadModuleSettings();
                         },
                         loadComponents() {
                             axios.get('Components/components.json').then(r => page.vue.components = r.data);
@@ -84,9 +93,11 @@
                             this.loadComponentSettings(this.dropIndex);
                         },
                         loadApplicationSettings() {
+                            page.vue.compIndex = -1;
                             page.vue.get("application", 'html').then(r => page.vue.setSettingsHTML(r, page.vue.application));
                         },
                         loadModuleSettings() {
+                            page.vue.compIndex = -1;
                             page.vue.get("module", 'html').then(r => page.vue.setSettingsHTML(r, page.vue._module));
                         },
                         loadComponentSettings(i) {
@@ -107,14 +118,14 @@
 <body onload="page.load()">
     <div id="app">
         <div class="p15">
-            <div class="fL w100 pt2">Application:</div>
-            <input class="fL w300" type='file' id='fileinput'>
+            <div class="fL w100 pt2"><b>Application:</b></div>
+            <input class="fL w300" type='file' id='appFile' onchange="page.vue.loadApplication()">
             <div class="fL">&nbsp;</div>
             <img class="fL btn w16" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
             <a id="saveApp"><img class="fL btn w16" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
         </div>
         <div class="p15">
-            <div class="fL w100 pt2">Module:</div>
+            <div class="fL w100 pt2"><b>Module:</b></div>
             <select id="modules" class="fL w300" v-model="modIndex" v-on:change="loadModuleSettings();">
                 <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
             </select>
