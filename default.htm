@@ -11,9 +11,10 @@
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w100 { width: 100px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; }
-        .vL { width:138px; text-align:center; } .vM { width:350px; text-align:center; } .vR { width:500px; }
-        .btn { border:3px solid white; border-radius: 8px; } .btn:hover { border:3px solid highlight; } 
-        .sel { border:3px solid red; }
+        .vL { width:170px; text-align:center; } .vM { width:350px; text-align:center; } .vR { width:500px; }
+        .btn { border:2px solid white; border-radius: 11px; } .btn:hover { border:2px solid highlight; } 
+        .sel { border:2px solid red; }
+        input { border-radius: 4px; border:1px solid #999999; padding:2px; }
     </style>
     <script>
         var page = {
@@ -142,10 +143,13 @@
                                      v-if="c.charAt(0) == c.charAt(0).toLowerCase()" 
                                      v-bind:src="'components/' + c + '/card.png'" 
                                      v-bind:componentName="c" />
+                    <div class="pt6"></div>
                 </div>
             </div>
             <div class="vM workColumn">
-                <img src="Images/linkb.png" ondrop="page.vue.drop(0, event.ctrlKey)" ondragover="event.preventDefault()" />
+                <img v-bind:src="(_components.length == 0) ? 'Images/link.png' : 'Images/linkb.png'" 
+                     ondrop="page.vue.drop(0, event.ctrlKey)" 
+                     ondragover="event.preventDefault()" />
                 <div v-for="(wi, i) in _components">
                     <div>
                         <img v-bind:class="(compIndex == i) ? 'btn sel' : 'btn'" 

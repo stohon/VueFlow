@@ -20,19 +20,20 @@
     <style>
         * { font-family: Segoe UI,SegoeUI; font-size:11px; }
         .cardTag {
-            height:43px; 
+            height:28px; 
             width:10px;
             
             float:left;
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
+            vertical-align: middle;
         }
         
         .cardDisplay {
             padding-top:5px;padding-bottom:5px;
             padding-left:10px;
-            height:31px; 
-            width:80px;
+            height:16px; 
+            width:120px;
             background-color: white;
             float:left;
             border-top-right-radius: 8px;
@@ -42,18 +43,42 @@
             border-bottom:1px solid #adadad;
             font-weight:bold;
             background: linear-gradient(#ffffff, #eaeaea);
+            display: table-cell;
+            vertical-align: middle;
         }
 </style>
 <style>
         .tb { background: linear-gradient(#6699dd, #336699); }
         .ty { background: linear-gradient(#dd9966, #996633); }
+        .ty2 { background: linear-gradient(#99ff66, #66dd66); }
+        .tr { background: linear-gradient(#ff9966, #dd6633); }
+        .tg { background: linear-gradient(#ff99ff, #dd66dd); }
 </style>
 </head>
 <body>
-<div id="imgcanvas">
-    <div class="cardTag tb"></div><div class="cardDisplay">SQL Server<br/>Query</div>
+<div id="imgcanvas" style="display: table;">
+    <div class="cardTag tb"></div><div class="cardDisplay"><div>Database</div></div>
     <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag ty"></div><div class="cardDisplay">Start<br/>Service</div>
+    <div class="cardTag tb"></div><div class="cardDisplay"><div>Flat File</div></div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag tb"></div><div class="cardDisplay"><div>Service API</div></div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag ty"></div><div class="cardDisplay">Service Start</div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag ty"></div><div class="cardDisplay">Service End</div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag ty2"></div><div class="cardDisplay">Validation</div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag tr"></div><div class="cardDisplay">Custom Code</div>
+    <div style="clear:left;">&nbsp;</div>
+    <div class="cardTag tg"></div><div class="cardDisplay">Call Module</div>
 </div>
+<div style="display: table; height: 400px; overflow: hidden;">
+     <div style="display: table-cell; vertical-align: middle;">
+       <div>
+         everything is vertically centered in modern IE8+ and others.
+       </div>
+     </div>
+   </div>
 </body>
 </html>
