@@ -5,18 +5,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
     <style>
         * { font-family:sans-serif; font-size:14px; }
-        .workWindow { width: 1350px; clear:left; } 
+        .workWindow { width: 600px; clear:left; } 
         .workColumn { height: 75vh; overflow: auto; float:left; }
         .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; }
-        .vL { text-align:center; } .vM { width:380px; margin-left:25px; } .vR { width:500px; }
+        .vL { text-align:center; } .vM { width:430px; margin-left:25px; } .vR { width:500px; }
         .btn { border:2px solid white; border-radius: 11px; } .btn:hover { border:2px solid highlight; } 
+        .btns { border:3px solid transparent; } .btns:hover { cursor:pointer; } 
         .btn0b { border:0px solid white;  } 
         .sel { border:0px solid red; border-radius: 11px;}
         input { border-radius: 4px; border:1px solid #999999; padding:2px; }
         .inputbox { border-radius: 4px; border:1px solid #999999; padding:2px; }
+        .head { background: linear-gradient(#aaccff, #99bbee);height:85px;margin-bottom:10px;border-radius: 11px;width:615px; }
     </style>
     <script>
         var page = {
@@ -120,13 +122,13 @@
 </head>
 <body onload="page.load()">
     <div id="app">
-        <div style="background-color:#aaddff;height:85px;margin-bottom:10px;border-radius: 11px;">
+        <div class="head">
             <div class="p15">
                 <div class="fL w200 pt6"><b>Survey:</b></div>
                 <input class="fL w300" style="background-color:white;" type='file' id='appFile' onchange="page.vue.loadApplication()">
                 <div class="fL">&nbsp;</div>
-                <img class="fL btn w20" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
-                <a id="saveApp"><img class="fL btn w20" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
+                <img class="fL btns w20" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
+                <a id="saveApp"><img class="fL btns w20" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
             </div>
             <div class="p15">
                 <div class="fL w200 pt6"><b>Question(s) Grouping:</b></div>
@@ -134,9 +136,9 @@
                     <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
                 </select>
                 <div class="fL">&nbsp;</div>
-                <img class="fL btn w20" src="Images/add.svg" onclick="page.vue.newModule()" />
-                <img class="fL btn w20" src="Images/delete.svg" onclick="page.vue.deleteModule()" />
-                <img class="fL btn w20" src="Images/edit.svg" onclick="page.vue.loadModuleSettings()" />
+                <img class="fL btns w20" src="Images/edit.svg" onclick="page.vue.loadModuleSettings()" />
+                <img class="fL btns w20" src="Images/add.svg" onclick="page.vue.newModule()" />
+                <img class="fL btns w20" src="Images/delete.svg" onclick="page.vue.deleteModule()" />
                 <div class="fL pl15">&nbsp;</div>
             </div>
         </div>
@@ -168,7 +170,7 @@
                                 onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
                             
                         </div>
-                        <div style="height:28px;" class="fl">this is a test of a long string</div>
+                        <div style="height:28px;margin-left:10px;font-size:12px;overflow:hidden;" class="fl"><textarea cols=40 style="resize: none;font-size:12px;border:0px;margin-top:-2px;" type="text" value="" />this is a long string this is a test of a long string this is</textarea></div>
                     </div>
                     <div style="clear:left;">
                         <div class="fl">
@@ -180,8 +182,11 @@
                     </div>
                 </div>
             </div>
-            <div id="component" class="vR workColumn pl15" />
+            <div id="component" style="display:none;position:absolute;left:100px;top:10px;" class="vR workColumn pl15" />
         </div>
+    </div>
+    <div style="display:none;position:absolute;left:100px;top:10px;">
+        <div id="component" class="vR workColumn pl15" />
     </div>
 </body>
 </html>
