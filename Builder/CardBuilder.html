@@ -20,19 +20,19 @@
     <style>
         * { font-family: Segoe UI,SegoeUI; font-size:11px; }
         .cardTag {
-            height:28px; 
+            height:27px; 
             width:10px;
-            
             float:left;
+            clear:left;
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
             vertical-align: middle;
         }
         
         .cardDisplay {
-            padding-top:5px;padding-bottom:5px;
-            padding-left:10px;
-            height:16px; 
+            padding-top:1px;padding-bottom:5px;
+            padding-left:5px;
+            height:15; 
             width:120px;
             background-color: white;
             float:left;
@@ -46,39 +46,134 @@
             display: table-cell;
             vertical-align: middle;
         }
+
+        .input { margin-top:3px; float: left;width:10px; }
+        .lbl { float: left; padding-top:4px; padding-left:2px; }
 </style>
 <style>
+        .tlg { background: linear-gradient(#88ffff, #44aaaa); }
         .tb { background: linear-gradient(#6699dd, #336699); }
         .ty { background: linear-gradient(#dd9966, #996633); }
         .ty2 { background: linear-gradient(#99ff66, #66dd66); }
         .tr { background: linear-gradient(#ff9966, #dd6633); }
-        .tg { background: linear-gradient(#ff99ff, #dd66dd); }
+        .tg { background: linear-gradient(#ff6699, #992266); }
+        .to { background: linear-gradient(orange, orangered); }
 </style>
 </head>
 <body>
 <div id="imgcanvas" style="display: table;">
-    <div class="cardTag tb"></div><div class="cardDisplay"><div>Database</div></div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag tb"></div><div class="cardDisplay"><div>Flat File</div></div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag tb"></div><div class="cardDisplay"><div>Service API</div></div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag ty"></div><div class="cardDisplay">Service Start</div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag ty"></div><div class="cardDisplay">Service End</div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag ty2"></div><div class="cardDisplay">Validation</div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag tr"></div><div class="cardDisplay">Custom Code</div>
-    <div style="clear:left;">&nbsp;</div>
-    <div class="cardTag tg"></div><div class="cardDisplay">Call Module</div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tlg"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Verify User</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag ty2"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Comment</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tr"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Page Break</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="radio" /></div> -->
+                <div class="lbl">Single Select</div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="checkbox" /></div> -->
+                <div class="lbl">Multi Select</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Number</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Date</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Single Line Text</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tb"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Multi Line Text</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag to"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Jump To Decision</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding:5px;clear:left;">
+        <div class="cardTag tg"></div>
+        <div class="cardDisplay">
+            <div>
+                <!-- <div class="input"><input type="number" /></div> -->
+                <div class="lbl">Submit</div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<div style="display: table; height: 400px; overflow: hidden;">
-     <div style="display: table-cell; vertical-align: middle;">
-       <div>
-         everything is vertically centered in modern IE8+ and others.
-       </div>
-     </div>
-   </div>
+
 </body>
 </html>

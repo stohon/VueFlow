@@ -9,12 +9,12 @@
         .workColumn { height: 75vh; overflow: auto; float:left; }
         .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
-        .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w300 { width: 300px; } 
+        .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; }
-        .vL { text-align:center; } .vM { width:650px; text-align:center; } .vR { width:500px; }
+        .vL { text-align:center; } .vM { width:380px; margin-left:25px; } .vR { width:500px; }
         .btn { border:2px solid white; border-radius: 11px; } .btn:hover { border:2px solid highlight; } 
         .btn0b { border:0px solid white;  } 
-        .sel { border:2px solid red; }
+        .sel { border:0px solid red; border-radius: 11px;}
         input { border-radius: 4px; border:1px solid #999999; padding:2px; }
         .inputbox { border-radius: 4px; border:1px solid #999999; padding:2px; }
     </style>
@@ -122,14 +122,14 @@
     <div id="app">
         <div style="background-color:#aaddff;height:85px;margin-bottom:10px;border-radius: 11px;">
             <div class="p15">
-                <div class="fL w100 pt6"><b>Application:</b></div>
+                <div class="fL w200 pt6"><b>Survey:</b></div>
                 <input class="fL w300" style="background-color:white;" type='file' id='appFile' onchange="page.vue.loadApplication()">
                 <div class="fL">&nbsp;</div>
                 <img class="fL btn w20" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
                 <a id="saveApp"><img class="fL btn w20" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
             </div>
             <div class="p15">
-                <div class="fL w100 pt6"><b>Module:</b></div>
+                <div class="fL w200 pt6"><b>Question(s) Grouping:</b></div>
                 <select id="modules" class="fL w300 inputbox" style="height:27px;" v-model="modIndex" v-on:change="loadModuleSettings();">
                     <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
                 </select>
@@ -151,26 +151,32 @@
                 </div>
             </div>
             <div class="vM workColumn">
-                <img v-bind:src="(_components.length == 0) ? 'Images/link.png' : 'Images/linkb.png'" 
-                     ondrop="page.vue.drop(0, event.ctrlKey)" 
-                     ondragover="event.preventDefault()" />
-                <div v-for="(wi, i) in _components">
-                    <div>
-                        <div class="fl" style="width:225px;" ><div class="fr">{{i}}</div></div>
-                        <img v-bind:class="(compIndex == i) ? 'btn0b' : 'btn0b'" 
-                             v-bind:id="'workitem' + i" 
-                             v-bind:index="i" 
-                             v-bind:src="'components/' + wi.name + '/card.png'" 
-                             v-bind:componentName="wi.name" draggable="true" 
-                             ondragstart="page.vue.drag(this.getAttribute('componentName'), this.getAttribute('index'))" 
-                             onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
-                        <div class="fr" style="width:225px;">&nbsp;<div class="fl" v-if="(compIndex == i)">selected</div></div>
+                <div>
+                    <img v-bind:src="(_components.length == 0) ? 'Images/link.png' : 'Images/linkb.png'" 
+                        ondrop="page.vue.drop(0, event.ctrlKey)" 
+                        ondragover="event.preventDefault()" />
+                </div>
+                <div v-for="(wi, i) in _components" style="clear:left;">
+                    <div class="fl">
+                        <div class="fl" style="text-align:top;clear:left;">
+                            <img v-bind:class="(compIndex == i) ? 'btn0b' : 'btn0b'" 
+                                v-bind:id="'workitem' + i" 
+                                v-bind:index="i" 
+                                v-bind:src="'components/' + wi.name + '/card.png'" 
+                                v-bind:componentName="wi.name" draggable="true" 
+                                ondragstart="page.vue.drag(this.getAttribute('componentName'), this.getAttribute('index'))" 
+                                onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
+                            
+                        </div>
+                        <div style="height:28px;" class="fl">this is a test of a long string</div>
                     </div>
-                    <div>
-                        <img v-bind:index="i + 1" 
-                             v-bind:src="(_components.length == (i + 1)) ? 'Images/linke.png' : 'Images/linkmid.png'" 
-                             ondrop="page.vue.drop(this.getAttribute('index'), event.ctrlKey)" 
-                             ondragover="event.preventDefault()" />
+                    <div style="clear:left;">
+                        <div class="fl">
+                            <img v-bind:index="i + 1" 
+                                 v-bind:src="(_components.length == (i + 1)) ? 'Images/linke.png' : 'Images/linkmid.png'" 
+                                 ondrop="page.vue.drop(this.getAttribute('index'), event.ctrlKey)" 
+                                 ondragover="event.preventDefault()" />         
+                        </div>
                     </div>
                 </div>
             </div>
