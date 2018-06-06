@@ -5,12 +5,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
     <style>
         * { font-family:sans-serif; font-size:14px; }
-        .workWindow { width: 1250px; clear:left; } 
+        .workWindow { width: 1250px; padding:5px; } 
         .workColumn { height: 75vh; overflow: auto; float:left; }
         .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
-        .fL { float:left; } .fR { float:right; }
+        .fL { float:left; } .fR { float:right; } cL { clear:left; }
         .vL { text-align:center; } .vM { width:430px; margin-left:25px; margin-top:0px; } .vR { width:500px; }
         .btn { border:2px solid white; border-radius: 11px; } .btn:hover { border:2px solid highlight; } 
         .btns { border:3px solid transparent; } .btns:hover { cursor:pointer; } 
@@ -18,7 +18,7 @@
         .sel { border:0px solid red; border-radius: 11px;}
         input { border-radius: 4px; border:1px solid #999999; padding:2px; }
         .inputbox { border-radius: 4px; border:1px solid #999999; padding:2px; }
-        .head { background: linear-gradient(#aaccff, #99bbee);height:85px;margin-bottom:10px;border-radius: 11px;width:1250px; }
+        .head { background: linear-gradient(#aaccff, #99bbee);height:55px;margin-bottom:10px;border-radius: 11px;width:1250px; }
         .itemDescriptionContainer { height:27px;margin-left:10px;margin-top:-2px;font-size:12px;overflow:hidden; }
         .itemTextArea { resize: none;font-size:12px;border:0px;margin-top:0px; }
     </style>
@@ -125,14 +125,14 @@
 <body onload="page.load()">
     <div id="app">
         <div class="head">
-            <div class="p15">
+            <div class="p15 fl cl">
                 <div class="fL w200 pt6"><b>Survey:</b></div>
                 <input class="fL w300" style="background-color:white;" type='file' id='appFile' onchange="page.vue.loadApplication()">
                 <div class="fL">&nbsp;</div>
                 <img class="fL btns w20" src="Images/appmenu.png" onclick="page.vue.loadApplicationSettings()" />
                 <a id="saveApp"><img class="fL btns w20" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
             </div>
-            <div class="p15">
+            <div class="p15 fl">
                 <div class="fL w200 pt6"><b>Question(s) Grouping:</b></div>
                 <select id="modules" class="fL w300 inputbox" style="height:27px;" v-model="modIndex" v-on:change="loadModuleSettings();">
                     <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
@@ -144,10 +144,10 @@
                 <div class="fL pl15">&nbsp;</div>
             </div>
         </div>
-        <div class="workWindow">
+        <div class="workWindow cl">
             <div class="vL workColumn">
                 <div v-for="c in components">
-                    <div v-if="c.charAt(0) != c.charAt(0).toLowerCase()" style="font-size:13px;font-weight:bold;padding:2px;margin-top:4px;text-align:middle;color:#224466;">{{ c }}</div>
+                    <div v-if="c.charAt(0) != c.charAt(0).toLowerCase()" style="font-size:13px;font-weight:bold;padding:2px;margin-top:4px;text-align:middle;color:black;">{{ c }}</div>
                     <img class="btn" draggable="true" ondragstart="page.vue.drag(this.getAttribute('componentName'), null)"
                                      v-if="c.charAt(0) == c.charAt(0).toLowerCase()" 
                                      v-bind:src="'components/' + c + '/card.png'" 
@@ -161,9 +161,9 @@
                         ondrop="page.vue.drop(0, event.ctrlKey)" 
                         ondragover="event.preventDefault()" />
                 </div>
-                <div v-for="(wi, i) in _components" style="clear:left;">
+                <div v-for="(wi, i) in _components" class="cl">
                     <div class="fl">
-                        <div class="fl" style="text-align:top;clear:left;">
+                        <div class="fl cl" style="text-align:top;">
                             <img v-bind:class="(compIndex == i) ? 'btn0b' : 'btn0b'" 
                                 v-bind:id="'workitem' + i" 
                                 v-bind:index="i" 
@@ -174,7 +174,7 @@
                         </div>
                         <div class="itemDescriptionContainer fl"><textarea cols=40 class="itemTextArea" type="text" />{{ wi.properties.name }}</textarea></div>
                     </div>
-                    <div style="clear:left;">
+                    <div class="cl">
                         <div class="fl">
                             <img v-bind:index="i + 1" style="width:26px;margin-left:55px;"
                                  v-bind:src="(_components.length == (i + 1)) ? 'Images/linke.png' : 'Images/linkmid.png'" 
