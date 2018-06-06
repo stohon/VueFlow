@@ -5,20 +5,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
     <style>
         * { font-family:sans-serif; font-size:14px; }
-        .workWindow { width: 600px; clear:left; } 
+        .workWindow { width: 1250px; clear:left; } 
         .workColumn { height: 75vh; overflow: auto; float:left; }
         .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; }
-        .vL { text-align:center; } .vM { width:430px; margin-left:25px; } .vR { width:500px; }
+        .vL { text-align:center; } .vM { width:430px; margin-left:25px; margin-top:0px; } .vR { width:500px; }
         .btn { border:2px solid white; border-radius: 11px; } .btn:hover { border:2px solid highlight; } 
         .btns { border:3px solid transparent; } .btns:hover { cursor:pointer; } 
         .btn0b { border:0px solid white;  } 
         .sel { border:0px solid red; border-radius: 11px;}
         input { border-radius: 4px; border:1px solid #999999; padding:2px; }
         .inputbox { border-radius: 4px; border:1px solid #999999; padding:2px; }
-        .head { background: linear-gradient(#aaccff, #99bbee);height:85px;margin-bottom:10px;border-radius: 11px;width:615px; }
+        .head { background: linear-gradient(#aaccff, #99bbee);height:85px;margin-bottom:10px;border-radius: 11px;width:1250px; }
+        .itemDescriptionContainer { height:27px;margin-left:10px;margin-top:-2px;font-size:12px;overflow:hidden; }
+        .itemTextArea { resize: none;font-size:12px;border:0px;margin-top:0px; }
     </style>
     <script>
         var page = {
@@ -145,16 +147,17 @@
         <div class="workWindow p15">
             <div class="vL workColumn">
                 <div v-for="c in components">
+                    <div v-if="c.charAt(0) != c.charAt(0).toLowerCase()" style="font-size:13px;font-weight:bold;padding:2px;margin-top:4px;text-align:middle;color:#224466;">{{ c }}</div>
                     <img class="btn" draggable="true" ondragstart="page.vue.drag(this.getAttribute('componentName'), null)"
                                      v-if="c.charAt(0) == c.charAt(0).toLowerCase()" 
                                      v-bind:src="'components/' + c + '/card.png'" 
                                      v-bind:componentName="c" />
-                    <div class="pt6"></div>
+                    <div class="pt2"></div>
                 </div>
             </div>
             <div class="vM workColumn">
                 <div>
-                    <img v-bind:src="(_components.length == 0) ? 'Images/link.png' : 'Images/linkb.png'" 
+                    <img v-bind:src="(_components.length == 0) ? 'Images/link.png' : 'Images/linkb.png'" style="width:26px;margin-left:55px;"
                         ondrop="page.vue.drop(0, event.ctrlKey)" 
                         ondragover="event.preventDefault()" />
                 </div>
@@ -168,13 +171,12 @@
                                 v-bind:componentName="wi.name" draggable="true" 
                                 ondragstart="page.vue.drag(this.getAttribute('componentName'), this.getAttribute('index'))" 
                                 onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
-                            
                         </div>
-                        <div style="height:28px;margin-left:10px;font-size:12px;overflow:hidden;" class="fl"><textarea cols=40 style="resize: none;font-size:12px;border:0px;margin-top:-2px;" type="text" value="" />this is a long string this is a test of a long string this is</textarea></div>
+                        <div class="itemDescriptionContainer fl"><textarea cols=40 class="itemTextArea" type="text" />{{ wi.properties.name }}</textarea></div>
                     </div>
                     <div style="clear:left;">
                         <div class="fl">
-                            <img v-bind:index="i + 1" 
+                            <img v-bind:index="i + 1" style="width:26px;margin-left:55px;"
                                  v-bind:src="(_components.length == (i + 1)) ? 'Images/linke.png' : 'Images/linkmid.png'" 
                                  ondrop="page.vue.drop(this.getAttribute('index'), event.ctrlKey)" 
                                  ondragover="event.preventDefault()" />         
@@ -182,11 +184,8 @@
                     </div>
                 </div>
             </div>
-            <div id="component" style="display:none;position:absolute;left:100px;top:10px;" class="vR workColumn pl15" />
+             <div id="component" class="vR workColumn pl15 fl" /> 
         </div>
-    </div>
-    <div style="display:none;position:absolute;left:100px;top:10px;">
-        <div id="component" class="vR workColumn pl15" />
     </div>
 </body>
 </html>

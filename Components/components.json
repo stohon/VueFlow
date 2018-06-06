@@ -1,1 +1,1 @@
-﻿[ "serviceStart", "serviceEnd", "flatFile", "database", "serviceAPI", "validation", "customCode", "modulePath" ]
+﻿[ "Styles", "heading", "comment", "pageBreak", "Questions", "singleSelect", "multiSelect", "dropDownList", "number", "date", "singleLineText", "multiLineText", "Actions", "verifyUser", "jumpToGrouping", "submit" ]
