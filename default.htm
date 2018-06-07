@@ -8,7 +8,7 @@
         .workWindow { width: 1250px; padding:5px; } 
         .workColumn { height: 75vh; overflow: auto; float:left; }
         .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } .pt12 { padding-top:12px; }
-        .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
+        .pl15 { padding-left:15px; } .pl20 { padding-left:20px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; } cL { clear:left; }
         .vL { text-align:center; } .vM { width:430px; margin-left:25px; margin-top:0px; } .vR { width:500px; }
@@ -135,7 +135,7 @@
                 <a id="saveApp"><img class="fL btns w20" src="Images/save.svg" onclick="page.vue.saveApplication()" /></a>
             </div>
             <div class="p15 fl">
-                <div class="fL w200 pt6"><b>Question(s) Grouping:</b></div>
+                <div class="fL w200 pt6"><b>Question Grouping:</b></div>
                 <select id="modules" class="fL w300 inputbox" style="height:27px;" v-model="modIndex" v-on:change="loadModuleSettings();">
                     <option v-for="(m, index) in _modules" v-bind:value="index">{{m.name}}</option>
                 </select>
