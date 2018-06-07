@@ -1,9 +1,24 @@
 ﻿<div>
-    <div><b>Service Start Settings</b></div>
-    <table class="pt6">
-        <tr>
-            <td style="width:100px;">Name:</td>
-            <td><input v-model="component.properties.name" class="w300" /></td>
-        </tr>
-    </table>
+    <div>
+        <h1>Verify User Settings</h1>
+    </div>
+    <div class="lbl pt2">
+        Description:
+    </div>
+    <div class="pt6">
+        <textarea v-model="component.properties.description" class="w300" style="height:45px;width:430px;"></textarea>
+    </div>
+    <div class="lbl pt12">
+        Select the type of verification of the user:
+    </div>
+    <div class="pt6">
+        <div class="cl fl"><input type="radio" checked /></div>
+        <div class="fl">
+            <div>By email address and token.</div>
+            <div class="pt6">
+                <div class="cl fl"><input type="checkbox" checked></div>
+                <div class="fl">Allow prepopulation of email address and token from querystring.</div>
+            </div>
+        </div>
+    </div>
 </div>

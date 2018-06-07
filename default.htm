@@ -7,7 +7,7 @@
         * { font-family:sans-serif; font-size:14px; }
         .workWindow { width: 1250px; padding:5px; } 
         .workColumn { height: 75vh; overflow: auto; float:left; }
-        .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } 
+        .pt2 { padding-top:2px; } .pt6 { padding-top:6px; } .pt12 { padding-top:12px; }
         .pl15 { padding-left:15px; } .pr15 { padding-right:15px; } 
         .p15 { padding:15px; } .w16 { width: 16px; } .w20 { width: 20px; } .w100 { width: 100px; } .w200 { width: 200px; } .w300 { width: 300px; } 
         .fL { float:left; } .fR { float:right; } cL { clear:left; }
@@ -21,6 +21,8 @@
         .head { background: linear-gradient(#aaccff, #99bbee);height:55px;margin-bottom:10px;border-radius: 11px;width:1250px; }
         .itemDescriptionContainer { height:27px;margin-left:10px;margin-top:-2px;font-size:12px;overflow:hidden; }
         .itemTextArea { resize: none;font-size:12px;border:0px;margin-top:0px; }
+        h1 { font-size:16px;font-weight:bold;color:black; }
+        .lbl { font-size:13px;font-weight:bold;color:black; }
     </style>
     <script>
         var page = {
@@ -147,7 +149,7 @@
         <div class="workWindow cl">
             <div class="vL workColumn">
                 <div v-for="c in components">
-                    <div v-if="c.charAt(0) != c.charAt(0).toLowerCase()" style="font-size:13px;font-weight:bold;padding:2px;margin-top:4px;text-align:middle;color:black;">{{ c }}</div>
+                    <div v-if="c.charAt(0) != c.charAt(0).toLowerCase()" class="lbl" style="padding:2px;margin-top:4px;text-align:middle;">{{ c }}</div>
                     <img class="btn" draggable="true" ondragstart="page.vue.drag(this.getAttribute('componentName'), null)"
                                      v-if="c.charAt(0) == c.charAt(0).toLowerCase()" 
                                      v-bind:src="'components/' + c + '/card.png'" 
@@ -172,7 +174,7 @@
                                 ondragstart="page.vue.drag(this.getAttribute('componentName'), this.getAttribute('index'))" 
                                 onclick="page.vue.loadComponentSettings(this.getAttribute('index'))" />
                         </div>
-                        <div class="itemDescriptionContainer fl"><textarea cols=40 class="itemTextArea" type="text" />{{ wi.properties.name }}</textarea></div>
+                        <div class="itemDescriptionContainer fl"><textarea cols=40 class="itemTextArea" type="text" />{{ wi.properties.description }}</textarea></div>
                     </div>
                     <div class="cl">
                         <div class="fl">
@@ -184,7 +186,16 @@
                     </div>
                 </div>
             </div>
-             <div id="component" class="vR workColumn pl15 fl" /> 
+            <div class="vR workColumn pl15 fl">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="border:1px solid #dadada;padding:25px;background-color:lightgoldenrodyellow;">
+                            <div id="component"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+             
         </div>
     </div>
 </body>
